@@ -50,5 +50,5 @@ print(f"Precision score: {precision_score}")
 print(f"Recall score: {recall_score}")
 print(f"F1 score: {f1_score}")
 
-joblib.dump(pipe, "model.pk1")
-print("Model pipeline saved as pk1")
+joblib.dump(pipe, "model.pkl")
+print("Model pipeline saved as pkl")
