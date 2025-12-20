@@ -25,6 +25,13 @@ print(f"Shape of output: {y.shape}")
 # print(f"Categorical columns: {x.select_dtypes(include=['object']).columns}")
 # print(f"Numerical columns: {x.select_dtypes(exclude=['object']).columns}")
 
+x["TotalCharges"] = pd.to_numeric(x["TotalCharges"], errors="coerce")
+x["TotalCharges"] = x["TotalCharges"].fillna(0)
+
+# print(f"Categorical columns: {x.select_dtypes(include=['object']).columns}")
+# print(f"Numerical columns: {x.select_dtypes(exclude=['object']).columns}")
+
+
 #Train/Test split, getting the preprocessor ready
 x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=33, test_size=0.2)
 preprocessor = build_preprocessing_pipeline(x_train)
