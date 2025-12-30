@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme  {
+  --color-app: var(--bg-app);
+  --color-card: var(--bg-card);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-accent-hover: var(--accent-hover);
+  --color-bd: var(--border);
+  --color-field: var(--field-bg);
+}
+
+:root {
+  --bg-app: #101622;
+  --bg-card: #1B1F27;
+  --field-bg: #111318;
+  --text-primary: #e5e7eb;
+  --text-secondary: #94a3b8;
+  --accent: #38bdf8;
+  --accent-hover: #0ea5e9;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --border: #242A35;
+}
+
+@layer base {
+  body  {
+    background-color: var(--bg-app);
+  }
+
+  h1, h2, h3, h4, h5, h6, h7, p, input, label, select  {
+    color: var(--text-primary);
+  }
+
+  option  {
+    background-color: #000
+    color: #FFF;
+  }
+}
+
+
+/*
+ * 🎨 DARK THEME COLOR SCHEME (LOCK THIS)
+🌑 Backgrounds
+App background: #0f172a
+Deep slate/navy — easy on eyes, modern
+Card background: #020617
+Slight contrast from background, not pure black
+
+🧾 Text
+Primary text: #e5e7eb High readability
+Secondary text / labels: #94a3b8 Muted but clear
+Placeholder text: #64748b
+
+🔵 Primary Accent (MAIN ACTION COLOR)
+Primary blue: #38bdf8
+Used for buttons, focus rings, highlights
+Hover blue: #0ea5e9
+Only one accent color. This is important.
+
+✅ Success / ❌ Error (Minimal Use)
+Success (prediction: No churn): #22c55e
+Warning / Churn likely: #ef4444
+Error messages: #f87171
+Use these sparingly.
+
+🧩 Borders & Dividers
+Border color: #1e293b
+Input focus ring: #38bdf8 (same as primary accent)
+*/
