@@ -1,18 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BatchPrediction } from "@mui/icons-material";
+import { TargetContext } from "../context/targetContext";
 
 const Prediction = () => {
-  const [targetValue, setTargetValue] = useState(0); // The value you want to reach
+
+  const { target: [targetValue, setTargetValue] } = useContext(TargetContext);
+
+  // const [targetValue, setTargetValue] = useState(0); // The value you want to reach
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (progress >= targetValue) return;
+    if (progress > targetValue) {
+      const timer = setTimeout(() => {
+        setProgress((prev) => prev - 1);
+      }, 30);
+      return () => clearTimeout(timer);
+    }
+    else if (progress < targetValue) {
+      const timer = setTimeout(() => {
+        setProgress((prev) => prev + 1);
+      }, 30);
 
-    const timer = setTimeout(() => {
-      setProgress((prev) => prev + 1);
-    }, 30);
+      return () => clearTimeout(timer);
+    }
+    else {
+      return
+    }
 
-    return () => clearTimeout(timer);
   }, [progress, targetValue]);
 
   return (
@@ -36,7 +50,7 @@ const Prediction = () => {
           <div
             className="size-48 rounded-full flex items-center justify-center"
             style={{
-              background: `conic-gradient(#4ade80 ${progress}%, #334155 0)`
+              background: `conic-gradient(${targetValue <= 30 ? '#4ade80' : targetValue <= 60 ? '#facc15' : '#ef4444'} ${progress}%, #334155 0)`
             }}
           >
 

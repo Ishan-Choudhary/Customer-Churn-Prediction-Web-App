@@ -2,6 +2,8 @@ import { useState } from "react";
 import Header from "./components/Header.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import Prediction from "./components/Prediction.jsx";
+import TargetProvider from "./context/targetContext.jsx";
+
 
 function App() {
 
@@ -32,8 +34,10 @@ function App() {
     <div className="bg-app min-h-screen ">
       <Header />
       <div className="flex mx-2 flex-wrap">
-        <Dashboard />
-        <Prediction />
+        <TargetProvider>
+          <Dashboard />
+          <Prediction />
+        </TargetProvider>
       </div>
     </div>
   )

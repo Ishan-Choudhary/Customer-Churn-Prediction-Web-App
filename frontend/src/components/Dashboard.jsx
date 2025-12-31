@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { PeopleAlt, Router, Payments } from "@mui/icons-material";
+import { TargetContext } from "../context/targetContext";
 
 const Dashboard = () => {
 
   const [inputData, setInputData] = useState({
     gender: "Male",
-    Partner: false, //"No"
-    Dependents: false, //"No"
+    Partner: false,
+    Dependents: false,
     SeniorCitizen: false,
     PhoneService: false,
     MultipleLines: "No",
@@ -24,6 +25,8 @@ const Dashboard = () => {
     MonthlyCharges: 0,
     TotalCharges: 0,
   })
+
+  const { target: [targetValue, setTargetValue] } = useContext(TargetContext);
 
   const handleGenderChange = (e) => {
     setInputData((prevDemo) => ({ ...prevDemo, gender: e.target.value }))
@@ -90,22 +93,45 @@ const Dashboard = () => {
   }
 
   const handleTenureChange = (e) => {
-    setInputData((prevDemo) => ({ ...prevDemo, tenure: parseFloat(e.target.value) }))
+    setInputData((prevDemo) => ({ ...prevDemo, tenure: e.target.value === "" ? "" : parseInt(e.target.value) }))
   }
 
   const handleMonthlyChargesChange = (e) => {
-    setInputData((prevDemo) => ({ ...prevDemo, MonthlyCharges: parseFloat(e.target.value) }))
+    setInputData((prevDemo) => ({ ...prevDemo, MonthlyCharges: e.target.value === "" ? "" : parseFloat(e.target.value) }))
   }
 
   const handleTotalChargesChange = (e) => {
-    setInputData((prevDemo) => ({ ...prevDemo, TotalCharges: parseFloat(e.target.value) }))
+    setInputData((prevDemo) => ({ ...prevDemo, TotalCharges: e.target.value === "" ? "" : parseFloat(e.target.value) }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(inputData);
+    let payload = structuredClone(inputData);
+    payload = {
+      ...payload,
+      SeniorCitizen: payload["SeniorCitizen"] === false ? 0 : 1,
+      Partner: payload["Partner"] === false ? "No" : "Yes",
+      Dependents: payload["Dependents"] === false ? "No" : "Yes",
+      PhoneService: payload["PhoneService"] === false ? "No" : "Yes",
+      PaperlessBilling: payload["PaperlessBilling"] === false ? "No" : "Yes",
+    }
 
+    const req = await fetch("http://127.0.0.1:8000/api/predict/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload),
+    })
+
+    if (!req.ok) {
+      console.log("Invalid request");
+      return
+    }
+
+    const res = await req.json();
+    setTargetValue(parseInt(res["probability"] * 100))
   }
 
   return (
@@ -181,7 +207,7 @@ const Dashboard = () => {
           </div>
           <div className="px-2 pb-2">
             <label className="text-secondary text-sm font-bold" htmlFor="intService">INTERNET SERVICE</label>
-            <select name="intService" id="intService" className="bg-field w-full border-2 border-bd px-2 py-3 outline-none rounded-lg" value={inputData.gender} onChange={handleInternetService}>
+            <select name="intService" id="intService" className="bg-field w-full border-2 border-bd px-2 py-3 outline-none rounded-lg" value={inputData.InternetService} onChange={handleInternetService}>
               <option value="No">No</option>
               <option value="DSL">DSL</option>
               <option value="Fiber optic">Fiber Optic</option>
@@ -283,11 +309,11 @@ const Dashboard = () => {
             </div>
             <div>
               <label htmlFor="partner" className="text-secondary text-sm font-bold">TOTAL ($)</label>
-              <input required type="number" className="px-2 py-2 flex justify-between items-center bg-field border-2 border-bd rounded-lg w-full" placeholder="0.0" value={inputData.TotalCharges} onChange={handleTotalChargesChange} />
+              <input required type="number" className="px-2 py-2 flex justify-between items-center bg-field border-2 border-bd rounded-lg w-full" placeholder="0.00" value={inputData.TotalCharges} onChange={handleTotalChargesChange} />
             </div>
           </div>
         </div>
-      </form>
+      </form >
     </div >
   )
 }
