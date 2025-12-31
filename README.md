@@ -199,18 +199,4 @@ npm run dev
 
 ---
 
-## 🔮 Future Improvements
-
-* Dockerize backend and frontend
-* Add batch inference
-* Add explainability (e.g. SHAP)
-* Improve model with advanced techniques
-* Authentication and prediction history
-
----
-
-## 📌 Author
-
-**Ishan Choudhary**
-
 This project is part of a broader roadmap focused on building **production-grade ML systems**, not just models.
