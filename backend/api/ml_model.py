@@ -3,7 +3,7 @@ from pathlib import Path
 import joblib
 from pandas import DataFrame as df
 
-MODEL_PATH = Path(settings.BASE_DIR).parent / "ml" / "model.pkl"
+MODEL_PATH = Path(settings.BASE_DIR) / "ml" / "model.pkl"
 model = joblib.load(MODEL_PATH)
 
 def predict(input_data: dict):
