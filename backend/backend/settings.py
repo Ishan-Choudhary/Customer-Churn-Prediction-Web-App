@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,12 +25,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-qin^@y(c17ju!b@d9-jysm97)^bj5z-dg$1z-wjjr%-+vl1l9h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME')]
+    DEBUG = False
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = ["*"]
 
 
-ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://customer-churn-prediction-web-app-dgr6.onrender.com"
+]
 
 # Application definition
 
