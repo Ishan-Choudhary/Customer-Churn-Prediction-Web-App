@@ -19,6 +19,7 @@ node_modules
 /frontend/ *.local
 package.json
 package-lock.json
+.env
 
 # Editor directories and files
 /frontend/.DS_Store

@@ -35,9 +35,14 @@ else:
     ALLOWED_HOSTS = ["*"]
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "https://customer-churn-prediction-web.vercel.app",
+    "http://localhost:5173",
+]
 CSRF_TRUSTED_ORIGINS = [
-    "https://customer-churn-prediction-web-app-dgr6.onrender.com"
+    "https://customer-churn-prediction-web-app-dgr6.onrender.com",
+    "https://customer-churn-prediction-web.vercel.app/"
 ]
 
 # Application definition
