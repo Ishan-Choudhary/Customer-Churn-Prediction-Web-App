@@ -117,7 +117,8 @@ const Dashboard = () => {
       PaperlessBilling: payload["PaperlessBilling"] === false ? "No" : "Yes",
     }
 
-    const req = await fetch("http://127.0.0.1:8000/api/predict/", {
+    const API_URL = import.meta.env.VITE_API_URL
+    const req = await fetch(`${API_URL}/api/predict/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
